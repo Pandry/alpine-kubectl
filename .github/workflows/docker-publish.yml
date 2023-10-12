@@ -10,11 +10,8 @@ on:
   #  - cron: '* * 1 * *'
   workflow_dispatch: {}
   push:
-    branches: [ "master" ]
+    branches: [ 'v*.*.*' ]
     # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
-  #pull_request:
-  #  branches: [ "master" ]
 
 env:
   # Use docker.io for Docker Hub if empty
