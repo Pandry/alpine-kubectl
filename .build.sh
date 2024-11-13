@@ -12,8 +12,13 @@ case $ARCH in
     # i386) ARCH="386";;
 esac
 
+if test "${VERSION:0:1}" = "v"; then
+    VERSION=${VERSION:1:100}
+fi
+
 apk add curl jq yq --no-cache &&
-    curl -LO https://storage.googleapis.com/kubernetes-release/release/v${VERSION}/bin/linux/${ARCH}/kubectl &&
-    chmod +x kubectl &&
-    adduser -D kubeuser &&
-    cp kubectl /bin
+    curl -L --fail -o kubectl.tar.gz https://dl.k8s.io/v${VERSION}/kubernetes-client-linux-${ARCH}.tar.gz &&
+    tar -xf kubectl.tar.gz &&
+    mv kubernetes/client/bin/* /bin &&
+    rm -rf kubernetes kubectl.tar.gz &&
+    adduser -D kubeuser
